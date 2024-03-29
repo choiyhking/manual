@@ -185,10 +185,7 @@ virsh start <VM>
 
 Immediately terminate the domain domain.
 
-(This doesn't give the domain OS any chance to react, 
-
-and it's the equivalent of ripping the power cord out on a physical machine.
-
+(This doesn't give the domain OS any chance to react, and it's the equivalent of ripping the power cord out on a physical machine.
 It's better to use shutdown)
 ```
 virsh destroy <VM>
