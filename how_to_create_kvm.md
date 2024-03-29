@@ -173,7 +173,7 @@ virsh list --all
 # 10   test-vm   running
 ```
 
-Connect the virtual serial console for the guest
+Connect the virtual serial console for the guest.
 ```
 virsh console <VM>
 ```
