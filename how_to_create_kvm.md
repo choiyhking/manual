@@ -193,7 +193,7 @@ Start the guest machine.
 virsh start <VM>
 ```
 
-Immediately terminate the domain.
+Immediately terminate the VM.
 
 (This doesn't give the domain OS any chance to react, and it's the equivalent of ripping the power cord out on a physical machine.
 It's better to use shutdown)
