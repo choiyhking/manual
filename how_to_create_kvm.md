@@ -16,7 +16,7 @@ sudo dmesg | grep -i kvm
 # [    0.330228] kvm [1]: Hyp mode initialized successfully
 ```
 
-or run this command
+or run this command.
 ```
 sudo apt install -y cpu-checker
 kvm-ok
