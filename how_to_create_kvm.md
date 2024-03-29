@@ -101,7 +101,7 @@ Then, you can see GRUB page.
 11. Profile setup
 12. SSH setup
 13. Featured Server snaps
-14. Installing system # it will take a while to complete
+14. Installing system(it will take a while to complete)
 15. Select `Reboot` -> error
 
 `failed unmounting /cdrom, plz remove the installation medium, then press enter`
