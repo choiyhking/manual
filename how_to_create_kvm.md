@@ -87,8 +87,8 @@ Then, you can see GRUB page.
 **GRUB page**
 
 (If you don't need customization, just keep going by defualt options)
-1. Install Ubuntu Server
-2. Switch to rich mode
+1. Select `Install Ubuntu Server`
+2. Select `Switch to rich mode`
 3. Language setting
 4. Network connection
 5. Congifure proxy
@@ -97,12 +97,12 @@ Then, you can see GRUB page.
 
 ![스크린샷 2024-03-29 142852](https://github.com/yunhachoi/manual/assets/161846673/2ce82f24-54d6-4c22-921b-835d8b2e241b)
 
-10. Confirm destructive action -> continue
+10. Confirm destructive action -> select `continue`
 11. Profile setup
 12. SSH setup
 13. Featured Server snaps
 14. Installing system # it will take a while to complete
-15. Reboot -> error
+15. Select `Reboot` -> error
 
 `failed unmounting /cdrom, plz remove the installation medium, then press enter`
 
