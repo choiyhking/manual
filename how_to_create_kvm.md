@@ -58,12 +58,12 @@ sudo virsh net-list
 sudo virsh net-start default
 ```
 
-Create guest Virtual Machine using virt GUI manager.
+Create guest VM using virt GUI manager.
 ```
 virt-manager
 ```
 
-Create guest Virtual Machine using commands.
+Create guest VM using commands.
 First, you need OS image file.
 ```
 wget https://cdimage.ubuntu.com/releases/jammy/release/ubuntu-22.04.4-live-server-arm64.iso
