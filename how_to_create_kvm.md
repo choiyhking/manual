@@ -9,58 +9,71 @@
 Check KVM module is enabled.
 ```
 sudo dmesg | grep -i kvm
+
 # Result >
 # [    0.328294] kvm [1]: IPA Size Limit: 44 bits
 # [    0.329951] kvm [1]: vgic interrupt IRQ9
 # [    0.330228] kvm [1]: Hyp mode initialized successfully
+```
 
-# or run this command 
+or run this command
+```
 sudo apt install -y cpu-checker
 kvm-ok
+
 # Result >
 # INFO: /dev/kvm exists
 # KVM acceleration can be used
 ```
 
 Install packages.
-```bash
+```
 sudo apt install -y qemu-kvm libvirt-daemon libvirt-clients bridge-utils virtinst virt-manager
 ```
 
+Check the libvirtd status.
 ```
-# check the libvirtd status
 sudo systemctl enable libvirtd --now
 sudo systemctl is-active libvirtd
-# Result > active
 
-# Add user to group
+# Result > active
+```
+
+Add user to group.
+```
 sudo usermod -aG libvirt $USER
 sudo usermod -aG kvm $USER
 ```
 
+Check network list.
 ```
-# Check network
 sudo virsh net-list
+
 # Result >
 # Name      State    Autostart   Persistent
 # --------------------------------------------
 # default   active   yes         yes
- 
+
 # if there's no default network, then run this
 sudo virsh net-start default
 ```
 
 Create guest Virtual Machine using virt GUI manager.
-```bash
+```
 virt-manager
 ```
 
 Create guest Virtual Machine using commands.
+First, you need OS image file.
 ```
 wget https://cdimage.ubuntu.com/releases/jammy/release/ubuntu-22.04.4-live-server-arm64.iso
-# Result >
-# -rw-rw-r--   1 libvirt-qemu kvm  1.9G  2월 20 09:52 ubuntu-22.04.4-live-server-arm64.iso
 
+# Result >
+# -rw-rw-r--   1 libvirt-qemu kvm  1.9G  ubuntu-22.04.4-live-server-arm64.iso
+```
+
+then, create guest machine.
+```
 sudo virt-install --name=test-vm \
 --vcpus=2 \
 --memory=2048 \
@@ -69,14 +82,16 @@ sudo virt-install --name=test-vm \
 ```
 
 **GRUB page**
-**If you don't need customization, just keep going by defualt options**
+(If you don't need customization, just keep going by defualt options)
 1. Install Ubuntu Server
 2. Switch to rich mode
 3. Language setting
 4. Network connection
 5. Congifure proxy
 6. Configure Ubuntu archive mirror
-7. Storage configuration![스크린샷 2024-03-29 142852](https://github.com/yunhachoi/manual/assets/161846673/2ce82f24-54d6-4c22-921b-835d8b2e241b)
+7. Storage configuration
+
+![스크린샷 2024-03-29 142852](https://github.com/yunhachoi/manual/assets/161846673/2ce82f24-54d6-4c22-921b-835d8b2e241b)
 
 10. Confirm destructive action -> continue
 11. Profile setup
@@ -91,30 +106,38 @@ sudo virt-install --name=test-vm \
 
 -> no login prompt
 
--> `ctrl+c` -> login
+-> `ctrl+c`
 
+-> login
+
+Check isolated environment btw host and guest.
+**In the guest**
 ```
-# Guest VM
 yunha@test-vm:~$ uname -a
+
 # Result > 
 # Linux test-vm 5.15.0-101-generic #111-Ubuntu SMP Wed Mar 6 18:01:01 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
-
-# Host
+```
+**In the host**
+```
 pi@pi:~$ uname -a
+
 # Result > 
 # Linux pi 5.15.0-1049-raspi #52-Ubuntu SMP PREEMPT Thu Mar 14 08:39:42 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
 ```
 
-We can allocated guest VM's resources.
+We can check allocated guest VM's resources.
+
 ![스크린샷 2024-03-29 144746](https://github.com/yunhachoi/manual/assets/161846673/329456e7-8375-472d-b7fd-4824333f060d)
 
-We can check disk images.
+We can check automatically disk images.
 ```
 sudo ls /var/lib/libvirt/images/
+
 # Result > test-vm.qcow2
 ```
 
-When booting, there's an error on the first line.(but it doesn't matter. just a bug.)
+When booting, there's an error on the first line of output.(but it doesn't matter. just a bug.)
 
 `EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary`
 
@@ -122,40 +145,59 @@ Bug: https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1947046
 
 
 ### Commands
+Logout.
 ```
-# logout
 exit 
-# exit to host
+```
+
+Exit to host.
+```
 ctrl + ]
 ```
 
+Show all the guest VMs.
 ```
 virsh list --all
+
 # Result >
 # Id   Name      State
 # -------------------------
 # 10   test-vm   running
 ```
 
+Connect the virtual serial console for the guest
 ```
-# Connect the virtual serial console for the guest
 virsh console <VM>
-
+```
+Reboot.
+```
 virsh reboot <VM>
+```
 
-# Power-off
+Power-off.
+```
 virsh shutdown <VM>
-
+```
+Start guest machine.
+```
 virsh start <VM>
+```
 
-# Immediately terminate the domain domain.
-# This doesn't give the domain OS any chance to react, 
-# and it's the equivalent of ripping the power cord out on a physical machine.
-# It's better to use shutdown
+Immediately terminate the domain domain.
+
+(This doesn't give the domain OS any chance to react, 
+
+and it's the equivalent of ripping the power cord out on a physical machine.
+
+It's better to use shutdown)
+```
 virsh destroy <VM>
+```
 
-# Removing VM
+Removing VM.
+```
 virsh undefine <VM>
+
 # Result >
 # error: Failed to undefine domain 'test-vm'
 # error: Requested operation is not valid: cannot undefine domain with nvram
