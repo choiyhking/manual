@@ -1,6 +1,6 @@
 # How to create KVM guest machine
 
-### Host spec
+### Host specification
 - Raspberry Pi 4 Model B(8GB)
 - Ubuntu 22.04.4
 - 5.15.0-1049-raspi
