@@ -68,7 +68,7 @@ sudo virt-install --name=test-vm \
 --disk size=10
 ```
 
-### GRUB page
+**GRUB page**
 **If you don't need customization, just keep going by defualt options**
 1. Install Ubuntu Server
 2. Switch to rich mode
