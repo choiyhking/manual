@@ -76,13 +76,14 @@ sudo virt-install --name=test-vm \
 4. Network connection
 5. Congifure proxy
 6. Configure Ubuntu archive mirror
-7. Storage configuration
-8. Confirm destructive action -> continue
-9. Profile setup
-10. SSH setup
-11. Featured Server snaps
-12. Installing system # it will take a while to complete
-13. Reboot -> error 
+7. Storage configuration![스크린샷 2024-03-29 142852](https://github.com/yunhachoi/manual/assets/161846673/2ce82f24-54d6-4c22-921b-835d8b2e241b)
+
+10. Confirm destructive action -> continue
+11. Profile setup
+12. SSH setup
+13. Featured Server snaps
+14. Installing system # it will take a while to complete
+15. Reboot -> error 
 `failed unmounting /cdrom, plz remove the installation medium, then press enter`
 -> enter
 -> no login prompt
@@ -149,9 +150,11 @@ virsh undefine <VM>
 
 virsh undefine --nvram <VM> # --nvram remove nvram file
 ```
+![스크린샷 2024-03-29 144746](https://github.com/yunhachoi/manual/assets/161846673/329456e7-8375-472d-b7fd-4824333f060d)
 
 ## TODO
 
 - [ ] if I set disk size too small, I have to config storage configuration later manually.
 But this makes booting error. For now, I don't know why.
 - [ ] Check virt-install --import option.
+
