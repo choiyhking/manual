@@ -111,6 +111,7 @@ sudo virt-install --name=test-vm \
 -> login
 
 Check isolated environment btw host and guest.
+
 **In the guest**
 ```
 yunha@test-vm:~$ uname -a
@@ -118,6 +119,7 @@ yunha@test-vm:~$ uname -a
 # Result > 
 # Linux test-vm 5.15.0-101-generic #111-Ubuntu SMP Wed Mar 6 18:01:01 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
 ```
+
 **In the host**
 ```
 pi@pi:~$ uname -a
