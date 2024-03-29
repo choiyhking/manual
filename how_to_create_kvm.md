@@ -110,7 +110,7 @@ Then, you can see GRUB page.
 
 -> no login prompt
 
--> `ctrl+c`
+-> `ctrl + c`
 
 -> login
 
