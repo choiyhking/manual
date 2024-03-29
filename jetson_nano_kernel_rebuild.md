@@ -1,5 +1,7 @@
 # Enable KVM module on Jetson Nano
 
+How to rebuild the kernel to activate KVM on the Nvidia Jetson Nano
+
 original reference: https://github.com/lattice0/jetson_nano_kvm
 
 <pre><code>sudo dmesg | grep -i kvm
