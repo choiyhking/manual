@@ -114,7 +114,7 @@ Then, you can see GRUB page.
 
 -> login
 
-Guest VM is created!!
+**Guest VM is created!!**
 
 Check isolated environment btw host and guest.
 
