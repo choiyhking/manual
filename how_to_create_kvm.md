@@ -87,27 +87,31 @@ sudo virt-install --name=test-vm \
 
 `failed unmounting /cdrom, plz remove the installation medium, then press enter`
 
--> enter
+-> press `ENTER`
 
 -> no login prompt
 
--> ctrl+c -> login
+-> `ctrl+c` -> login
 
 ```
-# logout
-exit 
-# exit to host
-ctrl + ]
-```
-
-```
+# Guest VM
 yunha@test-vm:~$ uname -a
 # Result > 
 # Linux test-vm 5.15.0-101-generic #111-Ubuntu SMP Wed Mar 6 18:01:01 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
 
+# Host
 pi@pi:~$ uname -a
 # Result > 
 # Linux pi 5.15.0-1049-raspi #52-Ubuntu SMP PREEMPT Thu Mar 14 08:39:42 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
+```
+
+We can allocated guest VM's resources.
+![스크린샷 2024-03-29 144746](https://github.com/yunhachoi/manual/assets/161846673/329456e7-8375-472d-b7fd-4824333f060d)
+
+We can check disk images.
+```
+sudo ls /var/lib/libvirt/images/
+# Result > test-vm.qcow2
 ```
 
 When booting, there's an error on the first line.(but it doesn't matter. just a bug.)
@@ -116,17 +120,21 @@ When booting, there's an error on the first line.(but it doesn't matter. just a 
 
 Bug: https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1947046
 
+
+### Commands
+```
+# logout
+exit 
+# exit to host
+ctrl + ]
+```
+
 ```
 virsh list --all
 # Result >
 # Id   Name      State
 # -------------------------
 # 10   test-vm   running
-```
-
-```
-sudo ls /var/lib/libvirt/images/
-# Result > test-vm.qcow2
 ```
 
 ```
@@ -154,7 +162,16 @@ virsh undefine <VM>
 
 virsh undefine --nvram <VM> # --nvram remove nvram file
 ```
-![스크린샷 2024-03-29 144746](https://github.com/yunhachoi/manual/assets/161846673/329456e7-8375-472d-b7fd-4824333f060d)
+
+## References
+- Korean
+  * https://linuxhint.com/kvm_virtualization_raspberry_pi4/
+  * https://m.blog.naver.com/love_tolty/222650880951
+  * https://yona.xslab.co.kr/엑세스랩/HOWTO-V-Raptor-SQ-nano/post/21
+- English
+  * https://linuxhint.com/kvm_virtualization_raspberry_pi4/
+  * https://linux.die.net/man/1/virt-install
+  * https://linux.die.net/man/1/virsh
 
 ## TODO
 
