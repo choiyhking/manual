@@ -169,6 +169,7 @@ Connect the virtual serial console for the guest
 ```
 virsh console <VM>
 ```
+
 Reboot.
 ```
 virsh reboot <VM>
@@ -178,12 +179,13 @@ Power-off.
 ```
 virsh shutdown <VM>
 ```
-Start guest machine.
+
+Start the guest machine.
 ```
 virsh start <VM>
 ```
 
-Immediately terminate the domain domain.
+Immediately terminate the domain.
 
 (This doesn't give the domain OS any chance to react, and it's the equivalent of ripping the power cord out on a physical machine.
 It's better to use shutdown)
@@ -199,7 +201,8 @@ virsh undefine <VM>
 # error: Failed to undefine domain 'test-vm'
 # error: Requested operation is not valid: cannot undefine domain with nvram
 
-virsh undefine --nvram <VM> # --nvram remove nvram file
+# --nvram remove nvram file
+virsh undefine --nvram <VM> 
 ```
 
 ## References
@@ -213,8 +216,7 @@ virsh undefine --nvram <VM> # --nvram remove nvram file
   * https://linux.die.net/man/1/virsh
 
 ## TODO
-
-- [ ] if I set disk size too small, I have to config storage configuration later manually.
+- [ ] If I set disk size too small, I have to manually do storage configuration later.
 But this makes booting error. For now, I don't know why.
-- [ ] Check virt-install --import option.
+- [ ] Check `virt-install --import` option.
 
