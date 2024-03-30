@@ -220,6 +220,8 @@ You can check the contents of `vm_config.json`
   "mmds-config": null
 }
 ```
+You can check other options on [here](https://github.com/firecracker-microvm/firecracker/blob/main/src/firecracker/swagger/firecracker.yaml).
+
 
 If you want to power-off the guest VM, run `reboot` in the guest terminal.
 
