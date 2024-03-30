@@ -176,6 +176,7 @@ touch /var/lib/dpkg/status
 ### Using configuration file
 
 ```
+rm -f /tmp/firecracker.socket
 ./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
 ```
 
@@ -224,6 +225,16 @@ You can check other options on [here](https://github.com/firecracker-microvm/fir
 
 
 If you want to power-off the guest VM, run `reboot` in the guest terminal.
+
+**Whenever you reboot guest VM, you should remove socket.**
+```
+rm -f /tmp/firecracker.socket
+```
+
+otherwise, you can see this error.
+```
+[anonymous-instance:fc_api:ERROR:src/api_server/src/lib.rs:174] Error creating the HTTP server: IO error: Address in use (os error 98)
+```
 
 You can use ssh to enter guest VM.
 ```
