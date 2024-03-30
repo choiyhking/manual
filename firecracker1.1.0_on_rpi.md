@@ -171,7 +171,9 @@ touch /var/lib/dpkg/status
 
 #### Using configuration file
 
+```
 ./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
+```
 
 You can check the contents of `vm_config.json`
 
