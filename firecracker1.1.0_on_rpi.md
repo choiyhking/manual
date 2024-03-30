@@ -31,6 +31,7 @@ cp release-v1.1.0-aarch64/firecracker-v1.1.0-aarch64 firecracker
 Then, you will need an uncompressed Linux kernel binary, and an ext4 file system image (to use as rootfs).
 ```
 ARCH="$(uname -m)"
+
 # linux kernel binary
 wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.6/${ARCH}/vmlinux-5.10.198
 
