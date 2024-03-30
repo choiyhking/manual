@@ -55,7 +55,7 @@ Now, we can run firecracker!
 
 I will explain two methods.(using **API requests(standard)** and using **config json file**)
 
-#### Using API requests
+### Using API requests
 
 We need two shells.
 
@@ -169,7 +169,7 @@ mkdir /var/lib/dpkg
 touch /var/lib/dpkg/status
 ```
 
-#### Using configuration file
+### Using configuration file
 
 ```
 ./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
