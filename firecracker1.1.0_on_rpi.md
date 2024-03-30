@@ -119,10 +119,10 @@ Network setup.
 sudo ip tuntap add tap0 mode tap
 sudo ip addr add 172.16.0.1/24 dev tap0
 sudo ip link set tap0 up
-sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward" # 포트 포워딩 활성
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A FORWARD -i tap0 -o eth0 -j ACCEPT # 패킷이 tap0에서 eth0로 전달되는 것 허용
+sudo iptables -A FORWARD -i tap0 -o eth0 -j ACCEPT
 
 curl --unix-socket /tmp/firecracker.socket -i \
   -X PUT 'http://localhost/network-interfaces/eth0' \
@@ -149,10 +149,10 @@ Going back to your first shell, you should now see guest VM's prompt.
 
 We have to finish network setup **in the guest**.
 ```
-# 3줄은 매번 해줘야 -> 안하는 방법?
 ip addr add 172.16.0.2/24 dev eth0
 ip link set eth0 up
 ip route add default via 172.16.0.1 dev eth0
+
 echo nameserver 155.230.10.2 > /etc/resolv.conf
 ```
 
