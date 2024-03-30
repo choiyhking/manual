@@ -223,6 +223,7 @@ You can check the contents of `vm_config.json`
 ```
 You can check other options on [here](https://github.com/firecracker-microvm/firecracker/blob/main/src/firecracker/swagger/firecracker.yaml).
 
+Also, you have to do same thing to use network in the guest.
 
 If you want to power-off the guest VM, run `reboot` in the guest terminal.
 
@@ -255,4 +256,22 @@ sudo iptables-save > iptables.rules.old
 - https://s8sg.medium.com/quick-start-with-firecracker-and-firectl-in-ubuntu-f58aeedae04b
 
 ### TODO
-- [ ] Whenever boot guest VM, I have to do network setup in the guest everytime. Is there any solution to do this only once?
+- [x] Whenever boot guest VM, I have to do network setup in the guest everytime. Is there any solution to do this only once?
+
+First, create network configuration file.
+```
+cat << EOF | tee /etc/systemd/network/my-network-config.network > /dev/null
+[Match]
+Name=eth0
+
+[Network]
+Address=172.16.0.2/24
+Gateway=172.16.0.1
+EOF
+```
+
+Then, enable and restart the network service. (name of the serive is a little bit weird...)
+```
+systemctl enable systemd-networkd.service
+systemctl restart systemd-networkd.service
+```
