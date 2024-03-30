@@ -224,9 +224,9 @@ You can use ssh to enter guest VM.
 ssh -i ./ubuntu-22.04.id_rsa root@172.16.0.2
 ```
 
-Advanced: If you are running multiple Firecracker MicroVMs in parallel, or have something else on your system using tap0 then you need to create a tap for each one, with a unique name.
+**Advanced:** If you are running multiple Firecracker MicroVMs in parallel, or have something else on your system using tap0 then you need to create a tap for each one, with a unique name.
 
-Advanced: You also need to do the iptables set up for each new tap. If you have iptables rules you care about on your host, you may want to save those rules before starting.
+**Advanced:** You also need to do the iptables set up for each new tap. If you have iptables rules you care about on your host, you may want to save those rules before starting.
 
 ### References
 - https://github.com/firecracker-microvm/firecracker/blob/v1.1.0/docs/getting-started.md
