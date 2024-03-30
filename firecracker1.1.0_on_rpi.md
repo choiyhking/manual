@@ -244,4 +244,4 @@ sudo iptables-save > iptables.rules.old
 - https://s8sg.medium.com/quick-start-with-firecracker-and-firectl-in-ubuntu-f58aeedae04b
 
 ### TODO
-- [ ] Whenever boot guest VM, I have to do network setup in the guest. Is there any solution to do this only once?
+- [ ] Whenever boot guest VM, I have to do network setup in the guest everytime. Is there any solution to do this only once?
