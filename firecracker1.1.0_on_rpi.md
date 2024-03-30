@@ -272,7 +272,7 @@ Gateway=172.16.0.1
 EOF
 ```
 
-Then, enable and restart the network service. (name of the serive is a little bit weird...)
+Then, enable and restart the network service. (name of the service is a little bit weird...)
 ```
 systemctl enable systemd-networkd.service
 systemctl restart systemd-networkd.service
