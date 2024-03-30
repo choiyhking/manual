@@ -54,7 +54,7 @@ resize2fs ubuntu-22.04.ext4
 
 Now, we can run firecracker!
 
-I will explain two methods.(using **API requests(standard)** and using **config json file**)
+I will explain two methods. (using **API requests(standard)** and using **config file**)
 
 ### Using API requests
 
