@@ -258,7 +258,7 @@ sudo iptables-save > iptables.rules.old
 ### TODO
 - [x] Whenever boot guest VM, I have to do network setup in the guest everytime. Is there any solution to do this only once?
 
-**[Soulution]**
+**[Solution]**
 
 First, create network configuration file.
 ```
