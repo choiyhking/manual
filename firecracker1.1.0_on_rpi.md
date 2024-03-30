@@ -65,6 +65,9 @@ In the first shell, run firecracker binary.
 ```
 rm -f /tmp/firecracker.socket
 ./firecracker --api-sock /tmp/firecracker.socket
+
+# Result >
+# Your prompt will be blocked...
 ```
 
 In the second shell, communicate with firecracker process via HTTP requests.
