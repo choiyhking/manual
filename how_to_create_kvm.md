@@ -138,7 +138,7 @@ We can check allocated guest VM's resources.
 
 ![스크린샷 2024-03-29 144746](https://github.com/yunhachoi/manual/assets/161846673/329456e7-8375-472d-b7fd-4824333f060d)
 
-We can check automatically disk images.
+We can check automatically created disk images.
 ```
 sudo ls /var/lib/libvirt/images/
 
