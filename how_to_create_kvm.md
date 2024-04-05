@@ -94,6 +94,7 @@ There's an error on the first line of output.(but it doesn't matter. just a bug.
 `EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary`
 
 Bug: https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1947046
+
 2. Select `Switch to rich mode`
 3. Language setting
 4. Network connection
