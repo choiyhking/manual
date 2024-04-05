@@ -85,7 +85,6 @@ sudo virt-install --name=test-vm \
 Then, you can see GRUB page.
 
 **GRUB page**
-
 (If you don't need customization, just keep going by defualt options)
 1. Select `Install Ubuntu Server`
 
