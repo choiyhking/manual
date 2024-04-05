@@ -88,7 +88,7 @@ Then, you can see GRUB page.
 (If you don't need customization, just keep going by defualt options)
 1. Select `Install Ubuntu Server`
 
-There's an error on the first line of output.(but it doesn't matter. just a bug.)
+There's an error on the first line of output.(But it doesn't matter. Just a bug.)
 
 `EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary`
 
