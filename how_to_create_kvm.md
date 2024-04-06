@@ -209,7 +209,13 @@ virsh undefine <VM>
 # error: Requested operation is not valid: cannot undefine domain with nvram
 
 # --nvram remove nvram file
-virsh undefine --nvram <VM> 
+virsh undefine --nvram <VM>
+```
+
+## Trouble Shooting
+`You will need to grant the 'libvirt-qemu' user search permissions for the following directories: ['/home/pi']`
+```
+sudo chmod +x /home/pi
 ```
 
 ## References
