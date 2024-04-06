@@ -213,6 +213,8 @@ virsh undefine --nvram <VM>
 ```
 
 ## Trouble Shooting
+- Error 1
+
 `You will need to grant the 'libvirt-qemu' user search permissions for the following directories: ['/home/pi']`
 ```
 sudo chmod +x /home/pi
