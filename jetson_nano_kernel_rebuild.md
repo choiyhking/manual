@@ -1,4 +1,4 @@
-# Enable KVM module on Jetson Nano
+# Enable KVM module, GIC on Jetson Nano
 
 How to rebuild the kernel to activate KVM on the Nvidia Jetson Nano
 
