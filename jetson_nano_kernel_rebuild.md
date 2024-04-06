@@ -23,6 +23,8 @@ tar -jxvf kernel_src.tbz2</code></pre>
 echo "CONFIG_KVM=y
 CONFIG_VHOST_NET=m" >> arch/arm64/configs/tegra_defconfig</code></pre>
 
+or use uploaded `tegra_defconfig`.
+
 <pre><code>cd ${JETSON_NANO_KERNEL_SOURCE}/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc
 vim tegra210-soc-base.dtsi</code></pre>
 
