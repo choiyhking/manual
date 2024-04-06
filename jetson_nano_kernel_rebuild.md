@@ -68,17 +68,6 @@ sudo rsync -avh boot/* /boot</code></pre>
 
 Now, KVM module exists.
 
-```
-sudo reboot
-sudo dmesg | grep -i kvm
-
-[    1.062976] kvm [1]: 8-bit VMID
-[    1.062983] kvm [1]: IDMAP page: 84fb3000
-[    1.062987] kvm [1]: HYP VA range: 4000000000:7fffffffff
-[    1.065239] kvm [1]: Hyp mode initialized successfully
-[    1.065315] kvm [1]: virtual timer IRQ7
-```
-
 Check the DTS file name.
 
 <pre><code>sudo dmesg | grep -i kernel
@@ -102,9 +91,23 @@ LABEL primary
       MENU LABEL primary kernel
       LINUX /boot/Image
       INITRD /boot/initrd
-      FDT /boot/tegra210-p3448-0000-p3449-0000-b00.dtb
+      FDT /boot/dts/tegra210-p3448-0000-p3449-0000-a00.dtb
       APPEND ${cbootargs} quiet root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 loglevel=7 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
 ```
+
+```
+sudo reboot
+sudo dmesg | grep -i kvm
+
+[    1.050075] kvm [1]: 8-bit VMID
+[    1.050081] kvm [1]: IDMAP page: 84f8d000
+[    1.050085] kvm [1]: HYP VA range: 4000000000:7fffffffff
+[    1.052403] kvm [1]: Hyp mode initialized successfully
+[    1.052474] kvm [1]: vgic-v2@50044000
+[    1.052638] kvm [1]: vgic interrupt IRQ1
+[    1.052662] kvm [1]: virtual timer IRQ8
+```
+
 
 Lastly, check the modified kernel version.
 ```
