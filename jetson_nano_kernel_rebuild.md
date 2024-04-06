@@ -68,15 +68,7 @@ sudo rsync -avh boot/* /boot</code></pre>
 
 Now, KVM module exists.
 
-Check the DTS file name.
-
-<pre><code>sudo dmesg | grep -i kernel
-  
-[    0.420670] DTS File Name: /dvs/git/dirty/git-master_linux/kernel/kernel-4.9/arch/arm64/boot/dts/../../../../../../hardware/nvidia/platform/t210/porg/kernel-dts/tegra210-p3448-0000-p3449-0000-b00.dts</code></pre>
-
-Check the dtb file with same name at the `/boot`.
-<pre><code>ls /boot/tegra210-p3448-0000-p3449-0000-b00.dtb</code></pre>
-
+Let's enable GIC.
 Modify the config file. (Add FDT label)
 ```
 sudo vim /boot/extlinux/extlinux.conf
