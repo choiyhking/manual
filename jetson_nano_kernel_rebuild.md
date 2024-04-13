@@ -12,11 +12,11 @@ We can check taht KVM and GIC are not enabled.
 
 <pre><code></code>sudo dmesg | grep -i gic
 
-> Result<br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
+Result><br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
 
 <pre><code>ls /proc/device-tree/interrupt-controller
 
-> Result 
+Result>
  compatible          interrupt-controller   linux,phandle   phandle   status
   
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
