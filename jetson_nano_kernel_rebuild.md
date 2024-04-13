@@ -161,6 +161,7 @@ Also, KVM module is enabled.
 ```
 sudo dmesg | grep -i kvm
 
+Result >
 [    1.050075] kvm [1]: 8-bit VMID
 [    1.050081] kvm [1]: IDMAP page: 84f8d000
 [    1.050085] kvm [1]: HYP VA range: 4000000000:7fffffffff
