@@ -111,9 +111,12 @@ make -C kernel/kernel-4.9/ ARCH=arm64 O=$TEGRA_KERNEL_OUT LOCALVERSION=-tegra -j
 make -C kernel/kernel-4.9/ ARCH=arm64 O=$TEGRA_KERNEL_OUT LOCALVERSION=-tegra -j4 --output-sync=target dtbs
 make -C kernel/kernel-4.9/ ARCH=arm64 O=$TEGRA_KERNEL_OUT LOCALVERSION=-tegra INSTALL_MOD_PATH=$KERNEL_MODULES_OUT modules_install</code></pre>
 
+Make a backup.
+
 <pre><code>sudo cp -r /boot /boot_original
 sudo cp -r /lib /lib_original</code></pre>
 
+Override drivers, modules, and image.
 
 <pre><code>cd $JETSON_NANO_KERNEL_SOURCE/modules/lib/
 sudo cp -r firmware/* /lib/firmware
