@@ -8,6 +8,10 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 
 > nothing</code></pre>
 
+<pre><code></code>sudo dmesg | grep -i gic
+
+> [    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
+
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
 You should download the latest Jetson linux version from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
