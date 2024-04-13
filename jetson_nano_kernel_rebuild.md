@@ -188,7 +188,7 @@ This means that the irq interrupt activation worked.
 ls /proc/device-tree/interrupt-controller
 
 Result >
- compatible          interrupt-controller   **interrupts**      name      reg
+ compatible          interrupt-controller   interrupts      name      reg
 '#interrupt-cells'   interrupt-parent       linux,phandle   phandle   status
 ```
 
