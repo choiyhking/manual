@@ -72,6 +72,10 @@ CONFIG_ARM_GIC_V2M=y
 CONFIG_ARM_GIC_V3=y
 CONFIG_ARM_GIC_V3_ITS=y</pre>
 
+Compiling the kernel now would already activate KVM, but we would still miss an important feature that makes virtualization much faster: the irq chip. Without it, virtualization is still possible but an emulated irq chip is much slower. On firecracker (a virtualization tool written by AWS), it will not work as it requires this.
+
+What we need to do is specify, in the device tree, the features of the irq chip on the CPU. The device tree is a file that contains addresses for all devices on the Jetson Nano chip.
+
 Apply the below patch.
 
 <pre><code>cd ${JETSON_NANO_KERNEL_SOURCE}/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc
