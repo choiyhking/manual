@@ -181,14 +181,14 @@ Result >
 [    1.076684] gic 702f9000.agic: GIC IRQ controller registered
 ```
 
-See that the node interrupts, which didn't exist before, was added.
+See that the node **interrupts**, which didn't exist before, was added.
 
 This means that the irq interrupt activation worked.
 ```
 ls /proc/device-tree/interrupt-controller
 
 Result >
- compatible          interrupt-controller   interrupts      name      reg
+ compatible          interrupt-controller   **interrupts**      name      reg
 '#interrupt-cells'   interrupt-parent       linux,phandle   phandle   status
 ```
 
