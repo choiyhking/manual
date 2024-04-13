@@ -13,7 +13,8 @@ We can check that KVM and GIC are not enabled.
 
 <pre><code>sudo dmesg | grep -i kvm
 
-> nothing</code></pre>
+Result >
+nothing</code></pre>
 
 <pre><code></code>sudo dmesg | grep -i gic
 
