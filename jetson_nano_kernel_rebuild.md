@@ -7,7 +7,6 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 <pre><code>uname -r
 
 Result>
-
 4.9.253-tegra</code></pre>
 
 We can check that KVM and GIC are not enabled.
