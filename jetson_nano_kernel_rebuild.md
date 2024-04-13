@@ -33,12 +33,7 @@ JETSON_NANO_KERNEL_SOURCE=~/Linux_for_Tegra/source/public/
 cd $JETSON_NANO_KERNEL_SOURCE
 tar -jxvf kernel_src.tbz2</code></pre>
 
-
-<pre><code>cd ${JETSON_NANO_KERNEL_SOURCE}/kernel/kernel-4.9
-echo "CONFIG_KVM=y
-CONFIG_VHOST_NET=m" >> arch/arm64/configs/tegra_defconfig</code></pre>
-
-or use uploaded `tegra_defconfig`.
+Copy uploaded `tegra_defconfig` to `${JETSON_NANO_KERNEL_SOURCE}/kernel/kernel-4.9/arch/arm64/configs/`
 
 <pre><code>cd ${JETSON_NANO_KERNEL_SOURCE}/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc
 vim tegra210-soc-base.dtsi</code></pre>
