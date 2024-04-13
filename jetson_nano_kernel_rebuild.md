@@ -37,6 +37,7 @@ Copy uploaded `tegra_defconfig` to `${JETSON_NANO_KERNEL_SOURCE}/kernel/kernel-4
 
 Important configurations.
 
+<pre>
 CONFIG_HAVE_KVM_IRQCHIP=y
 
 CONFIG_HAVE_KVM_IRQFD=y
@@ -87,7 +88,7 @@ CONFIG_ARM_GIC_V2M=y
 
 CONFIG_ARM_GIC_V3=y
 
-CONFIG_ARM_GIC_V3_ITS=y
+CONFIG_ARM_GIC_V3_ITS=y</pre>
 
 Apply the below patch.
 
