@@ -15,7 +15,6 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 <pre><code>ls /proc/device-tree/interrupt-controller
 
 > Result 
-  
  compatible          interrupt-controller   linux,phandle   phandle   status
   
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
