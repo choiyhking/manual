@@ -4,6 +4,8 @@ How to rebuild the kernel to activate KVM and GIC on the Nvidia Jetson Nano
 
 original reference: https://github.com/lattice0/jetson_nano_kvm
 
+We can check taht KVM and GIC are not enabled.
+
 <pre><code>sudo dmesg | grep -i kvm
 
 > nothing</code></pre>
