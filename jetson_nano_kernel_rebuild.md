@@ -24,7 +24,6 @@ Result ><br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</cod
 
 Result >
  compatible          interrupt-controller   linux,phandle   phandle   status
-  
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
 
 ![스크린샷 2024-04-13 194753](https://github.com/yunhachoi/manual/assets/161846673/7707f9ba-6a85-452f-83ef-cd43305fcfc9)
