@@ -10,7 +10,7 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 
 <pre><code></code>sudo dmesg | grep -i gic
 
-> [    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
+> Result<br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
 
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
