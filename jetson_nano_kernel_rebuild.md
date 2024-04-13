@@ -183,7 +183,7 @@ Result >
 [    1.076684] gic 702f9000.agic: GIC IRQ controller registered
 ```
 
-see that the node interrupts, which didn't exist before, was added.
+See that the node interrupts, which didn't exist before, was added.
 
 This means the irc interrupt activation worked.
 ```
