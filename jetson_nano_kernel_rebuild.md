@@ -147,9 +147,7 @@ LABEL primary
       APPEND ${cbootargs} quiet root=/dev/mmcblk0p1 rw rootwait rootfstype=ext4 loglevel=7 console=ttyS0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
 ```
 
-```
-sudo reboot
-```
+You have to `reboot`.
 
 Now, we can check that kernel version has changed.
 ```
