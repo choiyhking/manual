@@ -25,7 +25,7 @@ First, install packages.
 
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
-You should download the latest Jetson linux version from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
+You should download the latest Jetson linux kernel source from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
 
 <pre><code>wget https://developer.nvidia.com/downloads/embedded/l4t/r32_release_v7.4/sources/t210/public_sources.tbz2
 tar -jxvf public_sources.tbz2
