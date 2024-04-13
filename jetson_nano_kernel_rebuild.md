@@ -149,6 +149,18 @@ LABEL primary
 
 ```
 sudo reboot
+```
+
+Now, we can check that kernel version has changed.
+```
+uname -r
+
+Result >
+4.9.337-tegra
+```
+
+Also, KVM module is enabled.
+```
 sudo dmesg | grep -i kvm
 
 [    1.050075] kvm [1]: 8-bit VMID
@@ -159,13 +171,8 @@ sudo dmesg | grep -i kvm
 [    1.052638] kvm [1]: vgic interrupt IRQ1
 [    1.052662] kvm [1]: virtual timer IRQ8
 ```
-```
-uname -r
 
-Result >
-4.9.337-tegra
-```
-
+GIC is enabled too.
 ```
 sudo dmesg | grep -i gic
 
@@ -176,6 +183,9 @@ Result >
 [    1.076684] gic 702f9000.agic: GIC IRQ controller registered
 ```
 
+see that the node interrupts, which didn't exist before, was added.
+
+This means the irc interrupt activation worked.
 ```
 ls /proc/device-tree/interrupt-controller
 
@@ -185,4 +195,3 @@ Result >
 ```
 
 ![image](https://github.com/yunhachoi/manual/assets/161846673/dddf1a45-b108-4fbf-bcb8-a52f43ca495d)
-
