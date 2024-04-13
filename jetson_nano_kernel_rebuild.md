@@ -35,10 +35,11 @@ tar -jxvf kernel_src.tbz2</code></pre>
 
 Copy uploaded `tegra_defconfig` to `${JETSON_NANO_KERNEL_SOURCE}/kernel/kernel-4.9/arch/arm64/configs/`
 
+Apply the below patch.
+
 <pre><code>cd ${JETSON_NANO_KERNEL_SOURCE}/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc
 vim tegra210-soc-base.dtsi</code></pre>
 
-Apply the below patch.
 ```
 --- a/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc/tegra210-soc-base.dtsi     2020-08-31 08:40:36.602176618 +0800
 +++ b/hardware/nvidia/soc/t210/kernel-dts/tegra210-soc/tegra210-soc-base.dtsi     2020-08-31 08:41:45.223679918 +0800
