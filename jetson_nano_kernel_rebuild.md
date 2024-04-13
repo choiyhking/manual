@@ -21,6 +21,8 @@ Result>
   
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
 
+First, install packages.
+
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
 You should download the latest Jetson linux version from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
