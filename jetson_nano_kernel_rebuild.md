@@ -27,6 +27,9 @@ Result >
   
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
 
+![스크린샷 2024-04-13 194753](https://github.com/yunhachoi/manual/assets/161846673/7707f9ba-6a85-452f-83ef-cd43305fcfc9)
+
+
 First, install packages.
 
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
@@ -156,11 +159,30 @@ sudo dmesg | grep -i kvm
 [    1.052638] kvm [1]: vgic interrupt IRQ1
 [    1.052662] kvm [1]: virtual timer IRQ8
 ```
-
-
-Lastly, check the modified kernel version.
 ```
-yunha@jetson:~$ sudo reboot
-yunha@jetson:~$ uname -r
+uname -r
+
+Result >
 4.9.337-tegra
 ```
+
+```
+sudo dmesg | grep -i gic
+
+Result > 
+[    0.000000] GIC: Using split EOI/Deactivate mode
+[    1.053149] kvm [1]: vgic-v2@50044000
+[    1.053319] kvm [1]: vgic interrupt IRQ1
+[    1.076684] gic 702f9000.agic: GIC IRQ controller registered
+```
+
+```
+ls /proc/device-tree/interrupt-controller
+
+Result >
+ compatible          interrupt-controller   interrupts      name      reg
+'#interrupt-cells'   interrupt-parent       linux,phandle   phandle   status
+```
+
+![image](https://github.com/yunhachoi/manual/assets/161846673/dddf1a45-b108-4fbf-bcb8-a52f43ca495d)
+
