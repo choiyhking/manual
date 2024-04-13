@@ -6,7 +6,7 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 
 <pre><code>uname -r
 
-Result>
+Result >
 4.9.253-tegra</code></pre>
 
 We can check that KVM and GIC are not enabled.
@@ -17,11 +17,11 @@ We can check that KVM and GIC are not enabled.
 
 <pre><code></code>sudo dmesg | grep -i gic
 
-Result><br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
+Result ><br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
 
 <pre><code>ls /proc/device-tree/interrupt-controller
 
-Result>
+Result >
  compatible          interrupt-controller   linux,phandle   phandle   status
   
 '#interrupt-cells'   interrupt-parent       name            reg</code></pre>
