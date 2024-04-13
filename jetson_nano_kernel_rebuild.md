@@ -184,7 +184,7 @@ Result >
 
 See that the node interrupts, which didn't exist before, was added.
 
-This means the irc interrupt activation worked.
+This means that the irq interrupt activation worked.
 ```
 ls /proc/device-tree/interrupt-controller
 
