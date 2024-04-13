@@ -126,9 +126,6 @@ sudo cp -r modules/* /lib/modules</code></pre>
 <pre><code>cd $JETSON_NANO_KERNEL_SOURCE/build/arch/arm64/
 sudo rsync -avh boot/* /boot</code></pre>
 
-Now, KVM module exists.
-
-Let's enable GIC.
 Modify the config file. (Add FDT label)
 ```
 sudo vim /boot/extlinux/extlinux.conf
