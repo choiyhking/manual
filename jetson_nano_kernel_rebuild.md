@@ -91,6 +91,8 @@ vim tegra210-soc-base.dtsi</code></pre>
                 status = "okay";
         };
 ```
+
+Start kernel compile.
  
 <pre><code>JETSON_NANO_KERNEL_SOURCE=~/Linux_for_Tegra/source/public
 TEGRA_KERNEL_OUT=$JETSON_NANO_KERNEL_SOURCE/build
