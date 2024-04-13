@@ -157,7 +157,7 @@ Result >
 4.9.337-tegra
 ```
 
-Also, KVM module is enabled.
+KVM module is enabled.
 ```
 sudo dmesg | grep -i kvm
 
@@ -171,7 +171,7 @@ Result >
 [    1.052662] kvm [1]: virtual timer IRQ8
 ```
 
-GIC is enabled too.
+Also, GIC is enabled.
 ```
 sudo dmesg | grep -i gic
 
