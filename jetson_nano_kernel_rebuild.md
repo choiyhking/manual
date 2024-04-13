@@ -88,7 +88,7 @@ vim tegra210-soc-base.dtsi</code></pre>
 +                       0x0 0x50044000 0x0 0x2000
 +                       0x0 0x50046000 0x0 0x2000>;
 +               interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
-                status = "disabled";
+                status = "okay";
         };
 ```
  
