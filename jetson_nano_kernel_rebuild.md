@@ -12,6 +12,14 @@ original reference: https://github.com/lattice0/jetson_nano_kvm
 
 > Result<br>[    1.041740] gic 702f9000.agic: GIC IRQ controller registered</code></pre>
 
+<pre><code>ls /proc/device-tree/interrupt-controller
+
+> Result 
+  
+ compatible          interrupt-controller   linux,phandle   phandle   status
+  
+'#interrupt-cells'   interrupt-parent       name            reg</code></pre>
+
 <pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
 You should download the latest Jetson linux version from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
