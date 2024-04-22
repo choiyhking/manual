@@ -204,8 +204,8 @@ You can check the contents of `vm_config.json`
     }
   ],
   "machine-config": {
-    "vcpu_count": 2,
-    "mem_size_mib": 1024,
+    "vcpu_count": 4,
+    "mem_size_mib": 2048,
     "smt": false,
     "track_dirty_pages": false
   },
