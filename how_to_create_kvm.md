@@ -76,7 +76,7 @@ wget https://cdimage.ubuntu.com/releases/jammy/release/ubuntu-22.04.4-live-serve
 then, create guest machine.
 ```
 sudo virt-install --name=test-vm \
---vcpus=2 \
+--vcpus=4 \
 --memory=2048 \
 --cdrom=./ubuntu-22.04.4-live-server-arm64.iso \
 --disk size=10
