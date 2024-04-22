@@ -220,7 +220,7 @@ virsh undefine --nvram <VM>
 sudo chmod +x /home/pi
 ```
 
-- Error 1
+- Error 2
 
 `WARNING  Couldn't configure UEFI: Did not find any UEFI binary path for arch 'aarch64'`
 ```
