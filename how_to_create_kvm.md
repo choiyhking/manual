@@ -220,6 +220,15 @@ virsh undefine --nvram <VM>
 sudo chmod +x /home/pi
 ```
 
+- Error 1
+
+`WARNING  Couldn't configure UEFI: Did not find any UEFI binary path for arch 'aarch64'`
+```
+sudo apt install qemu-efi-aarch64
+```
+
+then, execute virt-install with `--boot uefi` option.
+
 ## References
 - Korean
   * https://linuxhint.com/kvm_virtualization_raspberry_pi4/
