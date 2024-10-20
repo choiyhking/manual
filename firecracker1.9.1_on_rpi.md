@@ -77,8 +77,7 @@ Then, you will need an uncompressed Linux kernel binary, and an ext4 file system
 ```
 ARCH="$(uname -m)"
 
-latest=$(wget "http://spec.ccfc.min.s3.amazonaws.com/?prefix=firecracker-ci/v1.10/aarch64/vmlinux-6.1&list-type=2" -O - 2>/dev/null | grep "(?<=<Key>)(firecracker-ci/v1.10/aarch64/vmlinux-6\.1\.[0-9]{3})(?=</Key>)" 
--o -P)
+latest=$(wget "http://spec.ccfc.min.s3.amazonaws.com/?prefix=firecracker-ci/v1.10/aarch64/vmlinux-6.1&list-type=2" -O - 2>/dev/null | grep "(?<=<Key>)(firecracker-ci/v1.10/aarch64/vmlinux-6\.1\.[0-9]{3})(?=</Key>)" -o -P)
 
 # echo $latest
 # Result > firecracker-ci/v1.10/aarch64/vmlinux-6.1.102
