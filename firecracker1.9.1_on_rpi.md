@@ -6,12 +6,12 @@
 - 6.6.31+rpt-rpi-2712
 
 ### How-to
-Firecracker requires read/write access to /dev/kvm exposed by the KVM module.
+Firecracker requires read/write access to `/dev/kvm` exposed by the KVM module.
 
-First of all, you need to check KVM module is enabled.
-
+First of all, you need to check KVM module is exist.
 ```
 sudo dmesg | grep -i kvm
+
 Result >
 [    0.051848] kvm [1]: IPA Size Limit: 40 bits
 [    0.051872] kvm [1]: GICV region size/alignment is unsafe, using trapping (reduced performance)
@@ -25,12 +25,17 @@ sudo apt install -y cpu-checker
 kvm-ok
 ```
 
-If you don't have KVM module, you have to install KVM.
+If you don't have KVM module, you have to load it.
 
-Some Linux distributions use the kvm group to manage access to /dev/kvm, while others rely on access control lists. If you have the ACL package for your distro installed, you can grant Read+Write access with:
+Some Linux distributions use the `kvm` group to manage access to /dev/kvm, while others rely on access control lists. 
+
+If you have the ACL package for your distro installed, you can grant Read+Write access with:
 ```
 sudo setfacl -m u:${USER}:rw /dev/kvm
+
+# check status
 sudo getfacl /dev/kvm
+
 Result >
 getfacl: Removing leading '/' from absolute path names
 # file: dev/kvm
@@ -43,9 +48,10 @@ mask::rw-
 other::---
 ```
 
-You can check if you have access to /dev/kvm with:
+You can check if you have access to `/dev/kvm` with:
 ```
 [ -r /dev/kvm ] && [ -w /dev/kvm ] && echo "OK" || echo "FAIL"
+
 Result > 
 OK
 ```
@@ -57,6 +63,7 @@ release_url="https://github.com/firecracker-microvm/firecracker/releases"
 latest=$(basename $(curl -fsSLI -o /dev/null -w  %{url_effective} ${release_url}/latest))
 curl -L ${release_url}/download/${latest}/firecracker-${latest}-${ARCH}.tgz \
 | tar -xz
+
 # echo $ARCH
 # Result > aarch64
 # echo $latest
@@ -68,11 +75,11 @@ mv release-${latest}-$(uname -m)/firecracker-${latest}-${ARCH} firecracker
 
 Then, you will need an uncompressed Linux kernel binary, and an ext4 file system image (to use as rootfs).
 ```
-# Getting a rootfs and Guest Kernel Image
 ARCH="$(uname -m)"
 
 latest=$(wget "http://spec.ccfc.min.s3.amazonaws.com/?prefix=firecracker-ci/v1.10/aarch64/vmlinux-6.1&list-type=2" -O - 2>/dev/null | grep "(?<=<Key>)(firecracker-ci/v1.10/aarch64/vmlinux-6\.1\.[0-9]{3})(?=</Key>)" 
 -o -P)
+
 # echo $latest
 # Result > firecracker-ci/v1.10/aarch64/vmlinux-6.1.102
 
@@ -89,7 +96,7 @@ wget "https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.10/${ARCH}/ubuntu
 chmod 400 ./ubuntu-22.04.id_rsa
 ```
 
-Default size of rootfs is too small, so you have to resize to use bigger one.
+Default size of file system image is too small, so you have to resize to use bigger one.
 ```
 truncate -s 5G ubuntu-22.04.ext4
 e2fsck -f ubuntu-22.04.ext4
@@ -98,7 +105,7 @@ resize2fs ubuntu-22.04.ext4
 
 Now, we can run firecracker!
 
-I will explain two methods. (using **API requests(standard)** and using **config file**)
+There are two methods. (using **API requests** or **configuration file**)
 
 ### Using API requests
 
@@ -117,8 +124,7 @@ sudo ./firecracker --api-sock "${API_SOCKET}"
 
 Result >
 2024-10-20T15:00:36.697396842 [anonymous-instance:main] Running Firecracker v1.9.1
-
-your shell will be blocked...
+(and your shell will be blocked...)
 ```
 
 In the second shell, communicate with firecracker process via HTTP requests.
@@ -260,8 +266,13 @@ touch /var/lib/dpkg/status
 ### Using configuration file
 
 ```
-rm -f /tmp/firecracker.socket
-./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
+API_SOCKET="/tmp/firecracker.socket"
+
+# Remove API unix socket
+sudo rm -f $API_SOCKET
+
+# Run firecracker
+sudo ./firecracker --api-sock "${API_SOCKET}"
 ```
 
 You can check the contents of `vm_config.json`
