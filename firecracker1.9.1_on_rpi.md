@@ -197,16 +197,6 @@ sudo curl -X PUT --unix-socket "${API_SOCKET}" \
     }" \
     "http://localhost/drives/rootfs"
 
-# Set the guest resources
-curl --unix-socket /tmp/firecracker.socket -i  \
-  -X PUT 'http://localhost/machine-config' \
-  -H 'Accept: application/json'            \
-  -H 'Content-Type: application/json'      \
-  -d '{
-      "vcpu_count": 2,
-      "mem_size_mib": 1024
-  }'
-
 # The IP address of a guest is derived from its MAC address with
 # `fcnet-setup.sh`, this has been pre-configured in the guest rootfs. It is
 # important that `TAP_IP` and `FC_MAC` match this.
