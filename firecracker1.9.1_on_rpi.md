@@ -1,16 +1,22 @@
 # Guide to Getting Started with Firecracker on Raspberry Pi
 
 ### Host specification
-- Raspberry Pi 4 Model B(8GB)
-- Ubuntu 22.04.4
-- 5.15.0-1049-raspi
+- Raspberry Pi 5
+- Debian GNU/Linux 12 (bookworm)
+- 6.6.31+rpt-rpi-2712
 
 ### How-to
+Firecracker requires read/write access to /dev/kvm exposed by the KVM module.
 
 First of all, you need to check KVM module is enabled.
 
 ```
 sudo dmesg | grep -i kvm
+Result >
+[    0.051848] kvm [1]: IPA Size Limit: 40 bits
+[    0.051872] kvm [1]: GICV region size/alignment is unsafe, using trapping (reduced performance)
+[    0.051900] kvm [1]: vgic interrupt IRQ9
+[    0.051913] kvm [1]: VHE mode initialized successfully
 ```
 
 or you can use
@@ -21,25 +27,63 @@ kvm-ok
 
 If you don't have KVM module, you have to install KVM.
 
+Some Linux distributions use the kvm group to manage access to /dev/kvm, while others rely on access control lists. If you have the ACL package for your distro installed, you can grant Read+Write access with:
+```
+sudo setfacl -m u:${USER}:rw /dev/kvm
+sudo getfacl /dev/kvm
+Result >
+getfacl: Removing leading '/' from absolute path names
+# file: dev/kvm
+# owner: root
+# group: kvm
+user::rw-
+user:pi:rw-
+group::rw-
+mask::rw-
+other::---
+```
+
+You can check if you have access to /dev/kvm with:
+```
+[ -r /dev/kvm ] && [ -w /dev/kvm ] && echo "OK" || echo "FAIL"
+Result > 
+OK
+```
+
 Next, download firecracker binary.
 ```
-wget https://github.com/firecracker-microvm/firecracker/releases/download/v1.1.0/firecracker-v1.1.0-aarch64.tgz
-tar -zxvf firecracker-v1.1.0-aarch64.tgz
-cp release-v1.1.0-aarch64/firecracker-v1.1.0-aarch64 firecracker
+ARCH="$(uname -m)" 
+release_url="https://github.com/firecracker-microvm/firecracker/releases"
+latest=$(basename $(curl -fsSLI -o /dev/null -w  %{url_effective} ${release_url}/latest))
+curl -L ${release_url}/download/${latest}/firecracker-${latest}-${ARCH}.tgz \
+| tar -xz
+# echo $ARCH
+# Result > aarch64
+# echo $latest
+# Result > v.1.9.1
+
+# Rename the binary to "firecracker"
+mv release-${latest}-$(uname -m)/firecracker-${latest}-${ARCH} firecracker
 ```
 
 Then, you will need an uncompressed Linux kernel binary, and an ext4 file system image (to use as rootfs).
 ```
+# Getting a rootfs and Guest Kernel Image
 ARCH="$(uname -m)"
 
-# linux kernel binary
-wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.6/${ARCH}/vmlinux-5.10.198
+latest=$(wget "http://spec.ccfc.min.s3.amazonaws.com/?prefix=firecracker-ci/v1.10/aarch64/vmlinux-6.1&list-type=2" -O - 2>/dev/null | grep "(?<=<Key>)(firecracker-ci/v1.10/aarch64/vmlinux-6\.1\.[0-9]{3})(?=</Key>)" 
+-o -P)
+# echo $latest
+# Result > firecracker-ci/v1.10/aarch64/vmlinux-6.1.102
 
-# rootfs
-wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.6/${ARCH}/ubuntu-22.04.ext4
+# Download a linux kernel binary
+wget "https://s3.amazonaws.com/spec.ccfc.min/${latest}"
 
-# ssh key for rootfs
-wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.6/${ARCH}/ubuntu-22.04.id_rsa
+# Download a rootfs
+wget "https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.10/${ARCH}/ubuntu-22.04.ext4"
+
+# Download the ssh key for the rootfs
+wget "https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.10/${ARCH}/ubuntu-22.04.id_rsa"
 
 # Set user read permission on the ssh key
 chmod 400 ./ubuntu-22.04.id_rsa
@@ -63,47 +107,92 @@ We need two shells.
 In the first shell, run firecracker binary.
 
 ```
-rm -f /tmp/firecracker.socket
-./firecracker --api-sock /tmp/firecracker.socket
+API_SOCKET="/tmp/firecracker.socket"
 
-# Result >
-# Your prompt will be blocked...
+# Remove API unix socket
+sudo rm -f $API_SOCKET
+
+# Run firecracker
+sudo ./firecracker --api-sock "${API_SOCKET}"
+
+Result >
+2024-10-20T15:00:36.697396842 [anonymous-instance:main] Running Firecracker v1.9.1
+
+your shell will be blocked...
 ```
 
 In the second shell, communicate with firecracker process via HTTP requests.
-
-Set the guest kernel.
 ```
-arch=`uname -m`
-kernel_path="vmlinux-5.10.198" 
+TAP_DEV="tap0"
+TAP_IP="172.16.0.1"
+MASK_SHORT="/30"
 
-curl --unix-socket /tmp/firecracker.socket -i \
-      -X PUT 'http://localhost/boot-source'   \
-      -H 'Accept: application/json'           \
-      -H 'Content-Type: application/json'     \
-      -d "{
-            \"kernel_image_path\": \"${kernel_path}\",
-            \"boot_args\": \"keep_bootcon console=ttyS0 reboot=k panic=1 pci=off\"
-       }"
-```
+# Setup network interface
+sudo ip link del "$TAP_DEV" 2> /dev/null || true
+sudo ip tuntap add dev "$TAP_DEV" mode tap
+sudo ip addr add "${TAP_IP}${MASK_SHORT}" dev "$TAP_DEV"
+sudo ip link set dev "$TAP_DEV" up
 
-Set the guest rootfs.
-```
-rootfs_path="ubuntu-22.04.ext4"
-curl --unix-socket /tmp/firecracker.socket -i \
-  -X PUT 'http://localhost/drives/rootfs' \
-  -H 'Accept: application/json'           \
-  -H 'Content-Type: application/json'     \
-  -d "{
+# Enable ip forwarding
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+HOST_IFACE="eth0"
+
+# Set up microVM internet access
+sudo iptables -t nat -D POSTROUTING -o "$HOST_IFACE" -j MASQUERADE || true
+sudo iptables -D FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT \
+    || true
+sudo iptables -D FORWARD -i "$TAP_DEV" -o "$HOST_IFACE" -j ACCEPT || true
+sudo iptables -t nat -A POSTROUTING -o "$HOST_IFACE" -j MASQUERADE
+sudo iptables -I FORWARD 1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -I FORWARD 1 -i "$TAP_DEV" -o "$HOST_IFACE" -j ACCEPT
+
+API_SOCKET="/tmp/firecracker.socket"
+LOGFILE="./firecracker.log"
+
+# Create log file
+touch $LOGFILE
+
+# Set log file
+sudo curl -X PUT --unix-socket "${API_SOCKET}" \
+    --data "{
+        \"log_path\": \"${LOGFILE}\",
+        \"level\": \"Debug\",
+        \"show_level\": true,
+        \"show_log_origin\": true
+    }" \
+    "http://localhost/logger"
+
+KERNEL="./$(ls vmlinux* | tail -1)"
+KERNEL_BOOT_ARGS="console=ttyS0 reboot=k panic=1 pci=off"
+
+ARCH=$(uname -m)
+
+if [ ${ARCH} = "aarch64" ]; then
+    KERNEL_BOOT_ARGS="keep_bootcon ${KERNEL_BOOT_ARGS}"
+fi
+
+# Set boot source
+sudo curl -X PUT --unix-socket "${API_SOCKET}" \
+    --data "{
+        \"kernel_image_path\": \"${KERNEL}\",
+        \"boot_args\": \"${KERNEL_BOOT_ARGS}\"
+    }" \
+    "http://localhost/boot-source"
+
+ROOTFS="./ubuntu-22.04.ext4"
+
+# Set rootfs
+sudo curl -X PUT --unix-socket "${API_SOCKET}" \
+    --data "{
         \"drive_id\": \"rootfs\",
-        \"path_on_host\": \"${rootfs_path}\",
+        \"path_on_host\": \"${ROOTFS}\",
         \"is_root_device\": true,
         \"is_read_only\": false
-   }"
-```
+    }" \
+    "http://localhost/drives/rootfs"
 
-Set the guest resources.
-```
+# Set the guest resources
 curl --unix-socket /tmp/firecracker.socket -i  \
   -X PUT 'http://localhost/machine-config' \
   -H 'Accept: application/json'            \
@@ -112,41 +201,33 @@ curl --unix-socket /tmp/firecracker.socket -i  \
       "vcpu_count": 2,
       "mem_size_mib": 1024
   }'
+
+# The IP address of a guest is derived from its MAC address with
+# `fcnet-setup.sh`, this has been pre-configured in the guest rootfs. It is
+# important that `TAP_IP` and `FC_MAC` match this.
+FC_MAC="06:00:AC:10:00:02"
+
+# Set network interface
+sudo curl -X PUT --unix-socket "${API_SOCKET}" \
+    --data "{
+        \"iface_id\": \"net1\",
+        \"guest_mac\": \"$FC_MAC\",
+        \"host_dev_name\": \"$TAP_DEV\"
+    }" \
+    "http://localhost/network-interfaces/net1"
+
+# API requests are handled asynchronously, it is important the configuration is
+# set, before `InstanceStart`.
+sleep 0.015s
+
+# Start microVM
+sudo curl -X PUT --unix-socket "${API_SOCKET}" \
+    --data "{
+        \"action_type\": \"InstanceStart\"
+    }" \
+    "http://localhost/actions"
 ```
 
-Network setup.
-```
-sudo ip tuntap add tap0 mode tap
-sudo ip addr add 172.16.0.1/24 dev tap0
-sudo ip link set tap0 up
-sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
-sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A FORWARD -i tap0 -o eth0 -j ACCEPT
-```
-
-```
-curl --unix-socket /tmp/firecracker.socket -i \
-  -X PUT 'http://localhost/network-interfaces/eth0' \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-      "iface_id": "eth0",
-      "guest_mac": "AA:FC:00:00:00:01",
-      "host_dev_name": "tap0"
-    }'
-```
-
-Start microVM.
-```
-curl --unix-socket /tmp/firecracker.socket -i \
-  -X PUT 'http://localhost/actions'       \
-  -H  'Accept: application/json'          \
-  -H  'Content-Type: application/json'    \
-  -d '{
-      "action_type": "InstanceStart"
-   }'
-```
 Going back to your first shell, you should now see guest VM's prompt.
 
 We have to finish network setup **in the guest**.
@@ -155,6 +236,7 @@ ip addr add 172.16.0.2/24 dev eth0
 ip link set eth0 up
 ip route add default via 172.16.0.1 dev eth0
 
+# echo nameserver 8.8.8.8 > /etc/resolv.conf
 echo nameserver 155.230.10.2 > /etc/resolv.conf
 ```
 
@@ -272,8 +354,8 @@ rm -f /tmp/firecracker.socket
 ```
 
 ### References
-- https://github.com/firecracker-microvm/firecracker/blob/v1.1.0/docs/getting-started.md
-- https://github.com/firecracker-microvm/firecracker/blob/v1.1.0/docs/network-setup.md
+- https://github.com/firecracker-microvm/firecracker/blob/main/docs/getting-started.md
+- https://github.com/firecracker-microvm/firecracker/blob/main/docs/network-setup.md
 - https://dev.to/l1x/getting-started-with-firecracker-on-raspberry-pi-1pbc
 - https://s8sg.medium.com/quick-start-with-firecracker-and-firectl-in-ubuntu-f58aeedae04b
 
