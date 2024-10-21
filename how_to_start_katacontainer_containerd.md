@@ -1,4 +1,4 @@
-# Guide to Getting Started with Kata Container with containderd
+# Guide to Getting Started with Kata Container and containerd
 
 ## Host Specification
 - Raspberry Pi 5
@@ -6,7 +6,7 @@
 - 6.6.31+rpt-rpi-2712
 
 ## How-to
-Download Kata Container source
+Download Kata Container source.
 ```
 wget https://github.com/kata-containers/kata-containers/releases/download/3.9.0/kata-static-3.9.0-arm64.tar.xz
 sudo tar -xvf kata-static-3.9.0-arm64.tar.xz -C /
@@ -27,7 +27,7 @@ sudo ln -s /opt/kata/bin/kata-collect-data.sh /usr/local/bin
 # now, we can use without default path
 kata-runtime --version
 ```
-Check current host is available kata container
+Check if current host is available kata container.
 ```
 kata-runtime check
 # Result >
@@ -41,9 +41,9 @@ kata-runtime check
 # ERRO[0000] ERROR: System is not capable of running Kata Containers  arch=arm64 name=kata-runtime pid=4128 source=runtime
 # ERROR: System is not capable of running Kata Containers
 ```
-some kernel modules aren't loaded which needed to run Kata Continaer
+Some kernel modules aren't loaded which needed to run Kata Continaer.
 
-we need to rebuild kernel to load some modules!!
+We need to rebuild kernel to load modules !!
 
 -> `vhost_vsock`, `vhost`, `vhost_net`
 
@@ -62,17 +62,18 @@ git clone --depth=1 https://github.com/raspberrypi/linux
 # build configuration
 cd linux
 KERNEL=kernel_2712
+
 # "make bcm2711_defconfig" is
 # to create .config file based on the `arch/arm64/configs/bcm2711_defconfig`
 
 make menuconfig
 ##########################################################
-# set the custom kernel build name 
+# Set the custom kernel build name 
 #
 # General setup > Local version - append to kernel release
 # e.g., -v8-16k-virt
 
-# set the vhost, vhost_net, vhost_vsock modules
+# Set the vhost, vhost_net, vhost_vsock modules
 #
 # Device Drivers > VHOST drivers
 # <M> Host kernel accelerator for virtio net
@@ -80,7 +81,7 @@ make menuconfig
 ##########################################################
 ```
 
-If you finished configuration, "SAVE" as `.config`
+If you finished configuration, "SAVE" as `.config`.
 
 ```
 # build kernel
@@ -114,10 +115,9 @@ Successfully changed !!
 It's time to load modules.
 ```
 lsmod | grep vhost
-Result >
+# Result > nothing
 
 # we need to "load" the modules
-
 sudo modprobe -v vhost_vsock
 sudo modprobe -v vhost_net
 
@@ -132,7 +132,7 @@ lsmod | grep vhost
 # vhost_iotlb            49152  1 vhost
 # vsock                  81920  2 vmw_vsock_virtio_transport_common,vhost_vsock
 ```
-Now, kernel modules are successfully loaded that we need.
+Now, kernel modules which we need are successfully loaded.
 
 ```
 kata-runtime check
@@ -161,12 +161,13 @@ runc --version
 ```
 # containerd.service: config file to manage containerd as service by systemd
 # If we used apt install, it's automatically created
-# systemctl show -p FragmentPath containerd.service
+
+systemctl show -p FragmentPath containerd.service
 # Result >
 # FragmentPath=/lib/systemd/system/containerd.service
 ```
 
-We have to modify containerd configuration to use kata runtime(i.e., "containerd-shim-kata-v2") as a low-level container runtime(e.g., runc)
+We have to modify containerd configuration to use kata runtime(i.e., `containerd-shim-kata-v2`) as a low-level container runtime(e.g., `runc`)
 ```
 sudo vim /etc/containerd/config.toml
 ```
@@ -215,13 +216,13 @@ sudo ctr run --runtime "io.containerd.kata.v2" --rm -t "$image" test-kata uname 
 ```
 ![image](https://github.com/user-attachments/assets/bed44165-55c1-4d29-be55-24b3c6388c7b)
 
-Successfully configured !! 
-
 Different from host's kernel and runtime is "io.containerd.kata.v2" not runc.
 
-But "ctr" is not user-friendly, incompatible with docker-like commands and lacks some functionalities.
+Successfully configured !! 
 
-We need to use "nerdctl": Docker compatible CLI for containerd
+But `ctr` is not user-friendly, incompatible with docker-like commands and lacks some functionalities.
+
+We need to use `nerdctl`: Docker compatible CLI for containerd
 ```
 wget https://github.com/containerd/nerdctl/releases/download/v1.7.7/nerdctl-1.7.7-linux-arm64.tar.gz
 sudo tar Cxzvvf /usr/local/bin nerdctl-1.7.7-linux-arm64.tar.gz
@@ -231,10 +232,11 @@ sudo nerdctl run --runtime io.containerd.kata.v2 -it ubuntu:22.04 /bin/bash
 ```
 
 But it's not working.
+
 ![image](https://github.com/user-attachments/assets/96e44572-1857-4cee-9396-7567b58e9429)
 
 It seems like problem about CNI plugin.
-We need to install CNI pluging to configure network manually.
+We need to install CNI plugin to configure network manually.
 
 ```
 # install golang manually from the source
@@ -260,6 +262,7 @@ Test again.
 sudo nerdctl run --runtime io.containerd.kata.v2 -it ubuntu:22.04 /bin/bash
 ```
 Kata container is created, but there's still WARNING about cgroup.
+
 ![image](https://github.com/user-attachments/assets/4158a1da-07f8-4ac3-a2cf-58fd46c235bd)
 
 ```
@@ -280,7 +283,8 @@ sudo reboot
 sudo nerdctl run --runtime io.containerd.kata.v2 -it ubuntu:22.04 /bin/bash
 ```
 ![image](https://github.com/user-attachments/assets/a7ed7eec-4419-4463-8c76-45b2463ceaa2)
-Success !! 
+
+Finally success !! 
 
 Also, you have to check network inside the container.(e.g., `apt update`, `ping`)
 
