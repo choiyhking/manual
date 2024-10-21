@@ -47,6 +47,8 @@ We need to rebuild kernel to load modules !!
 
 -> `vhost_vsock`, `vhost`, `vhost_net`
 
+**(I realized that we can load these modules without kernel rebuild...so you can skip and go to module loading section.)**
+
 ```
 # install build dependencies
 sudo apt update
@@ -141,13 +143,17 @@ kata-runtime check
 # System is capable of running Kata Containers
 ```
 
-We can use Docker.
+**We can simply use Kata Container with Docker.**
+
+**(Docker does bothersome things, e.g., network and runtime configurations instead of us)**
+
 ```
 sudo docker run --runtime io.containerd.kata.v2 hello-world
 ```
 
+Otherwise, we have to do many things as follows.
 
-Install containerd.
+First, install containerd.
 ```
 sudo apt install -y containerd
 
