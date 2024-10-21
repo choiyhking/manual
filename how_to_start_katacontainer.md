@@ -151,6 +151,38 @@ kata-runtime check
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
+docker version
+# Result >
+###################################################################
+Client: Docker Engine - Community
+ Version:           27.3.1
+ API version:       1.47
+ Go version:        go1.22.7
+ Git commit:        ce12230
+ Built:             Fri Sep 20 11:41:19 2024
+ OS/Arch:           linux/arm64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          27.3.1
+  API version:      1.47 (minimum version 1.24)
+  Go version:       go1.22.7
+  Git commit:       41ca978
+  Built:            Fri Sep 20 11:41:19 2024
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          1.7.22
+  GitCommit:        7f7fdf5fed64eb6a7caf99b3e12efcf9d60e311c
+ runc:
+  Version:          1.1.14
+  GitCommit:        v1.1.14-0-g2c9f560
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+###################################################################
+
 sudo docker run --runtime io.containerd.kata.v2 hello-world
 ```
 
