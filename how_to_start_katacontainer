@@ -1,0 +1,54 @@
+# Guide to Getting Started with AWS Firecracker
+
+## Host Specification
+- Raspberry Pi 5
+- Raspberry Pi OS (Debian GNU/Linux 12 (bookworm))
+- 6.6.31+rpt-rpi-2712
+
+## How-to
+# Download Kata Container source
+wget https://github.com/kata-containers/kata-containers/releases/download/3.9.0/kata-static-3.9.0-arm64.tar.xz
+sudo tar -xvf kata-static-3.9.0-arm64.tar.xz -C /
+
+# 기본 path는 "/opt/kata"
+# 아래에서 사용하는 kata-runtime은 utility임. (shimv2랑 다름)
+/opt/kata/bin/kata-runtime --version
+Result >
+kata-runtime  : 3.9.0
+   commit   : cdaaf708a18da8e5f7e2b9824fa3e43b524893a5
+   OCI specs: 1.1.0+dev
+   
+# Add symbolic link in order for containerd to reach these binaries from default system PATH
+sudo ln -s /opt/kata/bin/kata-runtime /usr/local/bin
+sudo ln -s /opt/kata/bin/containerd-shim-kata-v2 /usr/local/bin
+sudo ln -s /opt/kata/bin/kata-collect-data.sh /usr/local/bin
+
+# 이제부터 앞에 path 안 붙여도 사용 가능
+kata-runtime --version
+
+# 현재 host가 kata container를 사용 가능한 환경인지 체크
+kata-runtime check
+Result >
+No newer release available
+ERRO[0000] Module is not loaded and it can not be inserted. Please consider running with sudo or as root  arch=arm64 module=vhost_vsock name=kata-runtime pid=4128 source=runtime
+ERRO[0000] kernel property vhost_vsock not found         arch=arm64 description="Host Support for Linux VM Sockets" name=vhost_vsock pid=4128 source=runtime type=module
+ERRO[0000] Module is not loaded and it can not be inserted. Please consider running with sudo or as root  arch=arm64 module=vhost name=kata-runtime pid=4128 source=runtime
+ERRO[0000] kernel property vhost not found               arch=arm64 description="Host kernel accelerator for virtio" name=vhost pid=4128 source=runtime type=module
+ERRO[0000] Module is not loaded and it can not be inserted. Please consider running with sudo or as root  arch=arm64 module=vhost_net name=kata-runtime pid=4128 source=runtime
+ERRO[0000] kernel property vhost_net not found           arch=arm64 description="Host kernel accelerator for virtio network" name=vhost_net pid=4128 source=runtime type=module
+ERRO[0000] ERROR: System is not capable of running Kata Containers  arch=arm64 name=kata-runtime pid=4128 source=runtime
+ERROR: System is not capable of running Kata Containers
+
+# 필요한 kernel module이 없다는 오류
+# 해당 모듈을 포함하는 kernel로 rebuild 필요
+# vhost_vsock
+# vhost
+# vhost_net
+
+## References
+- https://github.com/kata-containers/kata-containers/blob/main/docs/install/container-manager/containerd/containerd-install.md
+- https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/containerd-kata.md
+- https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-k8s-with-containerd-and-kata.md
+- https://blog.niflheim.cc/posts/kata_containers_raspberry/
+- https://blog.cloudkernels.net/posts/kata-fc-k3s-k8s/
+- https://www.raspberrypi.com/documentation/computers/linux_kernel.html
