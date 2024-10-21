@@ -29,9 +29,9 @@ Result >
 
 First, install packages.
 
-<pre><code>sudo apt update && sudo apt-get install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
+<pre><code>sudo apt update && sudo apt install -y build-essential bc git curl wget xxd kmod libssl-dev</code></pre>
 
-You should download the latest Jetson linux kernel source from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
+You should download the latest Jetson Linux kernel source from [here](https://developer.nvidia.com/embedded/jetson-linux-archive) that supports your board.
 
 <pre><code>wget https://developer.nvidia.com/downloads/embedded/l4t/r32_release_v7.4/sources/t210/public_sources.tbz2
 tar -jxvf public_sources.tbz2
@@ -72,7 +72,11 @@ CONFIG_ARM_GIC_V2M=y
 CONFIG_ARM_GIC_V3=y
 CONFIG_ARM_GIC_V3_ITS=y</pre>
 
-Compiling the kernel now would already activate KVM, but we would still miss an important feature that makes virtualization much faster: the irq chip. Without it, virtualization is still possible but an emulated irq chip is much slower. On firecracker (a virtualization tool written by AWS), it will not work as it requires this.
+Compiling the kernel now would already activate KVM,
+
+but we would still miss an important feature that makes virtualization much faster: `irq chip`
+
+Without it, virtualization is still possible but an emulated irq chip is much slower. On firecracker (a virtualization tool written by AWS), it will not work as it requires this.
 
 What we need to do is specify, in the device tree, the features of the irq chip on the CPU. The device tree is a file that contains addresses for all devices on the Jetson Nano chip.
 
@@ -126,7 +130,7 @@ sudo cp -r modules/* /lib/modules</code></pre>
 <pre><code>cd $JETSON_NANO_KERNEL_SOURCE/build/arch/arm64/
 sudo rsync -avh boot/* /boot</code></pre>
 
-Modify the config file. (Add FDT label)
+Modify the config file. (Add `FDT` label)
 ```
 sudo vim /boot/extlinux/extlinux.conf
 
