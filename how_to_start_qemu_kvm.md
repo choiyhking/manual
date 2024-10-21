@@ -68,10 +68,10 @@ Create guest VM using commands.
 
 First, you need OS image file.
 ```
-wget https://cdimage.ubuntu.com/releases/jammy/release/ubuntu-22.04.4-live-server-arm64.iso
+wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.7.0-arm64-netinst.iso
 
 # Result >
-# -rw-rw-r--   1 libvirt-qemu kvm  1.9G  ubuntu-22.04.4-live-server-arm64.iso
+# -rw-r--r-- 1 pi pi 551858176 Aug 31 21:12 debian-12.7.0-arm64-netinst.iso
 ```
 
 then, create guest machine.
@@ -79,7 +79,7 @@ then, create guest machine.
 sudo virt-install --name=test-vm \
 --vcpus=4 \
 --memory=2048 \
---cdrom=./ubuntu-22.04.4-live-server-arm64.iso \
+--cdrom=./debian-12.7.0-arm64-netinst.iso \
 --disk size=10
 ```
 
