@@ -11,9 +11,10 @@ Check KVM module is enabled.
 sudo dmesg | grep -i kvm
 
 # Result >
-# [    0.328294] kvm [1]: IPA Size Limit: 44 bits
-# [    0.329951] kvm [1]: vgic interrupt IRQ9
-# [    0.330228] kvm [1]: Hyp mode initialized successfully
+# [    0.051877] kvm [1]: IPA Size Limit: 40 bits
+# [    0.051900] kvm [1]: GICV region size/alignment is unsafe, using trapping (reduced performance)
+# [    0.051927] kvm [1]: vgic interrupt IRQ9
+# [    0.051940] kvm [1]: VHE mode initialized successfully
 ```
 
 or run this command.
