@@ -58,6 +58,7 @@ sudo virsh net-list
 
 # if there's no default network, then run this
 sudo virsh net-start default
+sudo virsh net-autostart default
 ```
 
 Create guest VM using virt GUI manager.
@@ -69,18 +70,13 @@ Create guest VM using commands.
 
 First, you need OS image file.
 ```
-# virt-install --osinfo list | grep debian
-
 # wget https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04.5-live-server-arm64.iso
 wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.7.0-arm64-netinst.iso
-
-# Result >
-# -rw-r--r-- 1 pi pi 551858176 Aug 31 21:12 debian-12.7.0-arm64-netinst.iso
 ```
 
 then, create guest machine.
 ```
-# virt-install osinfo 
+# virt-install --osinfo list | grep debian
 
 sudo virt-install --name=test-vm \
 --vcpus=2 \
@@ -98,7 +94,7 @@ Then, you can see GRUB page.
 (If you don't need customization, just keep going by defualt options)
 1. Select `Install Ubuntu Server`
 
-There's an error on the first line of output.(But it doesn't matter. Just a bug.)
+There's an error on the first line of output. (But it doesn't matter. Just a bug.)
 
 `EFI stub: ERROR: FIRMWARE BUG: kernel image not aligned on 64k boundary`
 
@@ -139,7 +135,7 @@ Check isolated environment btw host and guest.
 yunha@test-vm:~$ uname -a
 
 # Result > 
-# Linux test-vm 5.15.0-101-generic #111-Ubuntu SMP Wed Mar 6 18:01:01 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
+# Linux debian 6.1.0-26-arm64 #1 SMP Debian 6.1.112-1 (2024-09-30) aarch64 GNU/Linux
 ```
 
 **In the host**
@@ -147,7 +143,7 @@ yunha@test-vm:~$ uname -a
 pi@pi:~$ uname -a
 
 # Result > 
-# Linux pi 5.15.0-1049-raspi #52-Ubuntu SMP PREEMPT Thu Mar 14 08:39:42 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
+# Linux raspberrypi 6.6.31+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.31-1+rpt1 (2024-05-29) aarch64 GNU/Linux
 ```
 
 We can check allocated guest VM's resources.
