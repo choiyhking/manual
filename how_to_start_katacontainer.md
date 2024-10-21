@@ -1,4 +1,4 @@
-# Guide to Getting Started with AWS Firecracker
+# Guide to Getting Started with Kata Container
 
 ## Host Specification
 - Raspberry Pi 5
@@ -158,11 +158,13 @@ runc --version
 # libseccomp: 2.5.4
 ```
 
+```
 # containerd.service: config file to manage containerd as service by systemd
 # If we used apt install, it's automatically created
 # systemctl show -p FragmentPath containerd.service
 # Result >
 # FragmentPath=/lib/systemd/system/containerd.service
+```
 
 We have to modify containerd configuration to use kata runtime(i.e., "containerd-shim-kata-v2") as a low-level container runtime(e.g., runc)
 ```
