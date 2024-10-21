@@ -30,6 +30,7 @@ Install packages.
 ```
 sudo apt install -y qemu-kvm libvirt-daemon libvirt-clients bridge-utils virtinst virt-manager
 ```
+![image](https://github.com/user-attachments/assets/78972640-d7f5-44b3-ad51-53ebcf5fbf8f)
 
 Check the libvirtd status.
 ```
