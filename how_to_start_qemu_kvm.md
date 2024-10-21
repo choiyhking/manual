@@ -242,5 +242,3 @@ then, execute virt-install with `--boot uefi` option.
 ## TODO
 - [ ] If I set disk size too small, I have to manually do storage configuration later.
 But this makes booting error. For now, I don't know why.
-- [ ] Check `virt-install --import` option.
-
