@@ -1,4 +1,4 @@
-# Guide to Getting Started with Firecracker on Raspberry Pi
+# Guide to Getting Started with AWS Firecracker v1.9.1
 
 ### Host specification
 - Raspberry Pi 5
@@ -12,11 +12,11 @@ First of all, you need to check KVM module is exist.
 ```
 sudo dmesg | grep -i kvm
 
-Result >
-[    0.051848] kvm [1]: IPA Size Limit: 40 bits
-[    0.051872] kvm [1]: GICV region size/alignment is unsafe, using trapping (reduced performance)
-[    0.051900] kvm [1]: vgic interrupt IRQ9
-[    0.051913] kvm [1]: VHE mode initialized successfully
+# Result >
+# [    0.051848] kvm [1]: IPA Size Limit: 40 bits
+# [    0.051872] kvm [1]: GICV region size/alignment is unsafe, using trapping (reduced performance)
+# [    0.051900] kvm [1]: vgic interrupt IRQ9
+# [    0.051913] kvm [1]: VHE mode initialized successfully
 ```
 
 or you can use
@@ -36,24 +36,23 @@ sudo setfacl -m u:${USER}:rw /dev/kvm
 # check status
 sudo getfacl /dev/kvm
 
-Result >
-getfacl: Removing leading '/' from absolute path names
-# file: dev/kvm
-# owner: root
-# group: kvm
-user::rw-
-user:pi:rw-
-group::rw-
-mask::rw-
-other::---
+# Result >
+# getfacl: Removing leading '/' from absolute path names
+# # file: dev/kvm
+# # owner: root
+# # group: kvm
+# user::rw-
+# user:pi:rw-
+# group::rw-
+# mask::rw-
+# other::---
 ```
 
 You can check if you have access to `/dev/kvm` with:
 ```
 [ -r /dev/kvm ] && [ -w /dev/kvm ] && echo "OK" || echo "FAIL"
 
-Result > 
-OK
+# Result > OK
 ```
 
 Next, download firecracker binary.
@@ -121,9 +120,9 @@ sudo rm -f $API_SOCKET
 # Run firecracker
 sudo ./firecracker --api-sock "${API_SOCKET}"
 
-Result >
-2024-10-20T15:00:36.697396842 [anonymous-instance:main] Running Firecracker v1.9.1
-(and your shell will be blocked...)
+# Result >
+# 2024-10-20T15:00:36.697396842 [anonymous-instance:main] Running Firecracker v1.9.1
+# (and your shell will be blocked...)
 ```
 
 In the second shell, communicate with firecracker process via HTTP requests.
