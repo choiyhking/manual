@@ -1,4 +1,4 @@
-# How to create QEMU/KVM virtual machine
+# How to start QEMU/KVM virtual machine
 
 ### Host specification
 - Raspberry Pi 4 Model B(8GB)
