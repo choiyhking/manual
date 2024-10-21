@@ -1,4 +1,4 @@
-# Guide to Getting Started with Kata Container and containerd
+# Guide to Getting Started with Kata Container
 
 ## Host Specification
 - Raspberry Pi 5
@@ -140,6 +140,12 @@ kata-runtime check
 # No newer release available
 # System is capable of running Kata Containers
 ```
+
+We can use Docker.
+```
+sudo docker run --runtime io.containerd.kata.v2 hello-world
+```
+
 
 Install containerd.
 ```
