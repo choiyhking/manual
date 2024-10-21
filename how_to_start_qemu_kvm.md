@@ -1,9 +1,9 @@
 # How to start QEMU/KVM virtual machine
 
 ### Host specification
-- Raspberry Pi 4 Model B(8GB)
-- Ubuntu 22.04.4
-- 5.15.0-1049-raspi
+- Raspberry Pi 5
+- Raspberry Pi OS (Debian GNU/Linux 12 (bookworm))
+- 6.6.31+rpt-rpi-2712
 
 ### How-to
 Check KVM module is enabled.
