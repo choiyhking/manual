@@ -1,4 +1,4 @@
-# Guide to Getting Started with AWS Firecracker v1.9.1
+# Guide to Getting Started with AWS Firecracker
 
 ### Host specification
 - Raspberry Pi 5
@@ -27,9 +27,9 @@ kvm-ok
 
 If you don't have KVM module, you have to load it.
 
-Some Linux distributions use the `kvm` group to manage access to /dev/kvm, while others rely on access control lists. 
+Some Linux distributions use the `kvm` group to manage access to /dev/kvm, while others rely on access control lists (ACL). 
 
-If you have the ACL package for your distro installed, you can grant Read+Write access with:
+If you have the ACL package for your distro installed, you can grant read/write access with:
 ```
 sudo setfacl -m u:${USER}:rw /dev/kvm
 
@@ -125,7 +125,7 @@ sudo ./firecracker --api-sock "${API_SOCKET}"
 # (and your shell will be blocked...)
 ```
 
-In the second shell, communicate with firecracker process via HTTP requests.
+In the second shell, communicate with firecracker VMM process via HTTP requests.
 ```
 TAP_DEV="tap0"
 TAP_IP="172.16.0.1"
@@ -140,6 +140,8 @@ sudo ip link set dev "$TAP_DEV" up
 # Enable ip forwarding
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
+# I'm using Wi-Fi
+# otherwise, it will be "eth0"
 HOST_IFACE="wlan0"
 
 # Set up microVM internet access
@@ -167,6 +169,8 @@ sudo curl -X PUT --unix-socket "${API_SOCKET}" \
     }" \
     "http://localhost/logger"
 
+
+# Set boot source
 KERNEL="./$(ls vmlinux* | tail -1)"
 KERNEL_BOOT_ARGS="console=ttyS0 reboot=k panic=1 pci=off"
 
@@ -176,7 +180,6 @@ if [ ${ARCH} = "aarch64" ]; then
     KERNEL_BOOT_ARGS="keep_bootcon ${KERNEL_BOOT_ARGS}"
 fi
 
-# Set boot source
 sudo curl -X PUT --unix-socket "${API_SOCKET}" \
     --data "{
         \"kernel_image_path\": \"${KERNEL}\",
@@ -184,9 +187,9 @@ sudo curl -X PUT --unix-socket "${API_SOCKET}" \
     }" \
     "http://localhost/boot-source"
 
+# Set rootfs
 ROOTFS="./ubuntu-22.04.ext4"
 
-# Set rootfs
 sudo curl -X PUT --unix-socket "${API_SOCKET}" \
     --data "{
         \"drive_id\": \"rootfs\",
