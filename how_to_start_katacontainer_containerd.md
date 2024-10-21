@@ -1,4 +1,4 @@
-# Guide to Getting Started with Kata Container
+# Guide to Getting Started with Kata Container with containderd
 
 ## Host Specification
 - Raspberry Pi 5
