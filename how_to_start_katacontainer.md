@@ -80,7 +80,7 @@ make menuconfig
 ##########################################################
 ```
 
-If you finished configuration, "SAVE" as .config
+If you finished configuration, "SAVE" as `.config`
 
 ```
 # build kernel
