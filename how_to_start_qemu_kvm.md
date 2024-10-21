@@ -68,20 +68,23 @@ Create guest VM using commands.
 
 First, you need OS image file.
 ```
-wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.7.0-arm64-netinst.iso
+wget https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04.5-live-server-arm64.iso
 
 # Result >
-# -rw-r--r-- 1 pi pi 551858176 Aug 31 21:12 debian-12.7.0-arm64-netinst.iso
+# -rw-r--r-- 1 pi pi 551858176 Aug 31 21:12 ubuntu-22.04.5-live-server-arm64.iso
 ```
 
 then, create guest machine.
 ```
 sudo virt-install --name=test-vm \
---vcpus=4 \
+--vcpus=2 \
 --memory=2048 \
---cdrom=./debian-12.7.0-arm64-netinst.iso \
+--location=./ubuntu-22.04.5-live-server-arm64.iso \
+--os-variant debian11 \
 --disk size=10
 ```
+![image](https://github.com/user-attachments/assets/24e5d12d-a048-4efd-9720-43a7fd22acfb)
+
 
 Then, you can see GRUB page.
 
