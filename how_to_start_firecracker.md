@@ -32,7 +32,7 @@ Next, we need access control.
 
 Some Linux distributions use the `kvm` group to manage access to `/dev/kvm`, while others rely on access control lists (ACL). 
 
-If you have the ACL package for your distro installed, you can grant read/write access with:
+If you have the ACL package for your installed distro, you can grant read/write access with:
 ```
 sudo setfacl -m u:${USER}:rw /dev/kvm
 
