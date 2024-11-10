@@ -27,7 +27,10 @@ kvm-ok
 
 If you don't have KVM module, you have to load it.
 
-Some Linux distributions use the `kvm` group to manage access to /dev/kvm, while others rely on access control lists (ACL). 
+
+Next, we need access control.
+
+Some Linux distributions use the `kvm` group to manage access to `/dev/kvm`, while others rely on access control lists (ACL). 
 
 If you have the ACL package for your distro installed, you can grant read/write access with:
 ```
@@ -140,8 +143,6 @@ sudo ip link set dev "$TAP_DEV" up
 # Enable ip forwarding
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
-# I'm using Wi-Fi
-# otherwise, it will be "eth0"
 HOST_IFACE="eth0"
 
 # Set up microVM internet access
