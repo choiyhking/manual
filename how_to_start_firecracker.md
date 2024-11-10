@@ -142,7 +142,7 @@ sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
 # I'm using Wi-Fi
 # otherwise, it will be "eth0"
-HOST_IFACE="wlan0"
+HOST_IFACE="eth0"
 
 # Set up microVM internet access
 sudo iptables -t nat -D POSTROUTING -o "$HOST_IFACE" -j MASQUERADE || true
@@ -296,7 +296,7 @@ You can check the contents of `vm_config.json`
   "balloon": null,
   "network-interfaces": [
     {
-      "iface_id": "wlan0",
+      "iface_id": "eth0",
       "guest_mac": "06:00:AC:10:00:02",
       "host_dev_name": "tap0"
     }
@@ -347,9 +347,9 @@ sudo ip tuntap add tap0 mode tap
 sudo ip addr add 172.16.0.1/24 dev tap0
 sudo ip link set tap0 up
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
-sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A FORWARD -i tap0 -o wlan0 -j ACCEPT
+sudo iptables -A FORWARD -i tap0 -o eth0 -j ACCEPT
 
 rm -f /tmp/firecracker.socket
 ./firecracker --api-sock /tmp/firecracker.socket --config-file vm_config.json
