@@ -63,8 +63,7 @@ Next, download firecracker binary.
 ARCH="$(uname -m)" 
 release_url="https://github.com/firecracker-microvm/firecracker/releases"
 latest=$(basename $(curl -fsSLI -o /dev/null -w  %{url_effective} ${release_url}/latest))
-curl -L ${release_url}/download/${latest}/firecracker-${latest}-${ARCH}.tgz \
-| tar -xz
+curl -L ${release_url}/download/${latest}/firecracker-${latest}-${ARCH}.tgz | tar -xz
 
 # echo $ARCH
 # Result > aarch64
