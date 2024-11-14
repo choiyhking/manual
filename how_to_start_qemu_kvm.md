@@ -245,6 +245,6 @@ then, execute virt-install with `--boot uefi` option.
   * https://linux.die.net/man/1/virt-install
   * https://linux.die.net/man/1/virsh
 
-## TODO
+## To-Do
 - [ ] If I set disk size too small, I have to manually do storage configuration later.
 But this makes booting error. For now, I don't know why.
