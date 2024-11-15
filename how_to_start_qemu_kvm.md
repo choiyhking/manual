@@ -45,6 +45,7 @@ Add user to group.
 ```
 sudo usermod -aG libvirt $USER
 sudo usermod -aG kvm $USER
+sudo setfacl -m u:libvirt-qemu:rx $HOME
 ```
 
 Check network list.
