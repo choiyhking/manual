@@ -75,7 +75,7 @@ wget https://cdimage.ubuntu.com/releases/noble/release/ubuntu-24.04.1-live-serve
 
 then, create guest machine.
 ```
-# virt-install --osinfo list | grep debian
+# virt-install --osinfo list | grep ubuntu
 
 sudo virt-install --name=test-vm \
 --vcpus=2 \
