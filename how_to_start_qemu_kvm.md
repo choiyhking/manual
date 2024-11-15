@@ -81,8 +81,8 @@ then, create guest machine.
 sudo virt-install --name=test-vm \
 --vcpus=2 \
 --memory=2048 \
---location=./debian-12.7.0-arm64-netinst.iso \
---os-variant debian11 \
+--cd-rom=ubuntu-24.04.1-live-server-arm64.iso \
+--os-variant ubuntu22.04 \
 --disk size=10
 ```
 ![image](https://github.com/user-attachments/assets/24e5d12d-a048-4efd-9720-43a7fd22acfb)
