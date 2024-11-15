@@ -81,7 +81,7 @@ then, create guest machine.
 sudo virt-install --name=test-vm \
 --vcpus=2 \
 --memory=2048 \
---cd-rom=ubuntu-24.04.1-live-server-arm64.iso \
+--cdrom=ubuntu-24.04.1-live-server-arm64.iso \
 --os-variant ubuntu22.04 \
 --disk size=10
 ```
