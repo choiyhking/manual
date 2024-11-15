@@ -70,8 +70,7 @@ Create guest VM using commands.
 
 First, you need OS image file.
 ```
-# wget https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04.5-live-server-arm64.iso
-wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.7.0-arm64-netinst.iso
+wget https://cdimage.ubuntu.com/releases/noble/release/ubuntu-24.04.1-live-server-arm64.iso
 ```
 
 then, create guest machine.
